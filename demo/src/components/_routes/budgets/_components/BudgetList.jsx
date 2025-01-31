@@ -1,0 +1,36 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import CreateBudget from './CreateBudget';
+import BudgetItem from './BudgetItem';
+
+function BudgetList() {
+  const [budgets, setBudgets] = useState([]); // State to store the list of budgets
+
+  const fetchBudgets = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/budgets');
+      setBudgets(response.data); // Set fetched data to budgets state
+    } catch (error) {
+      console.error('Error fetching budgets:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBudgets();
+  }, []);
+
+  return (
+    <div className='mt-7'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
+        <CreateBudget onBudgetCreated={fetchBudgets} /> {/* Pass fetchBudgets as a prop */}
+        {budgets.map((budget) => (
+          <BudgetItem
+          key={budget._id} budget={budget}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default BudgetList;
