@@ -30,6 +30,42 @@ router.get('/budgets/:id?', async (req, res) => {
   }
 });
 
+// Route to get a single budget by ID
+router.get('/budget/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const budget = await Budget.findById(id);
+    if (!budget) return res.status(404).json({ message: 'Budget not found' });
+    res.status(200).json(budget);
+  } catch (error) {
+    console.error("Error fetching budget:", error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+//Update budget with expenses details
+router.put('/budgets/:id', async (req, res) => {
+  const { id } = req.params;
+  const { totalExpense, expensesCount } = req.body;
+
+  try {
+    const updatedBudget = await Budget.findByIdAndUpdate(id, {
+      totalExpense,
+      expensesCount
+    }, { new: true });
+
+    if (!updatedBudget) {
+      return res.status(404).json({ message: 'Budget not found' });
+    }
+
+    res.status(200).json(updatedBudget);
+  } catch (error) {
+    console.error("Error updating budget:", error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Route to delete a budget
 router.delete('/budgets/:id', async (req, res) => {
   try {

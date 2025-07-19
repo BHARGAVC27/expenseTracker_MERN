@@ -20,8 +20,21 @@ function AddExpense({ budgetId, onExpenseAdded }) {
       await axios.post(`http://localhost:5000/api/expenses/create-expense`, {
         budgetId,
         name,
-        amount: Number(amount)
+        amount: Number(amount),
       });
+
+      // Fetch current budget
+      const budgetRes = await axios.get(`http://localhost:5000/api/budget/${budgetId}`);
+      const budget = budgetRes.data;
+      const newTotalExpense = Number(budget.totalExpense || 0) + Number(amount);
+      const newExpensesCount = Number(budget.expensesCount || 0) + 1;
+
+      await axios.put(`http://localhost:5000/api/budgets/${budgetId}`, {
+        totalExpense: newTotalExpense,
+        expensesCount: newExpensesCount,
+      });
+
+      console.log("Budget updated successfully");
       toast('Expense added successfully');
       setName('');
       setAmount('');

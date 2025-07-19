@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import CreateBudget from './CreateBudget';
 import BudgetItem from './BudgetItem';
+import { Toaster } from '@/components/ui/sonner';
 
 function BudgetList() {
   const [budgets, setBudgets] = useState([]); // State to store the list of budgets
@@ -12,6 +13,7 @@ function BudgetList() {
       setBudgets(response.data); // Set fetched data to budgets state
     } catch (error) {
       console.error('Error fetching budgets:', error);
+      <Toaster/>
     }
   };
 

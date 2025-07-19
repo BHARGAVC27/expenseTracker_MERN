@@ -13,6 +13,14 @@ const BudgetSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now // Automatically sets the current date
+    },
+    expensesCount : {
+        type: Number,
+        default: '0' 
+    },
+    totalExpense: {
+        type: Number,
+        default: '0' 
     }
 });
 

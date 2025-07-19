@@ -4,7 +4,6 @@ import CardInfo from './_components/CardInfo';
 import CustomBarChart from './_components/CustomBarChart.jsx';
 import BudgetItem from '@/components/_routes/budgets/_components/BudgetItem';
 import axios from 'axios';
-import exp from 'constants';
 
 function Dashboard() {
   const { user } = useUser();
@@ -41,21 +40,29 @@ function Dashboard() {
   };
 
   const chartData = budgets.map((budget) => {
-    // Filter the expenses related to the current budget by matching `budget_id`
+    // Filter the expenses related to the current budget by matching `budgetId`
     const totalExpenses = expenses
-      .filter((expense) => expense.budgetId === budget._id) // Match expenses with budget
-      .reduce((sum, expense) => sum + expense.amount, 0); // Sum the expenses for this budget
-  
+      .filter((expense) => expense.budgetId === budget._id)
+      .reduce((sum, expense) => sum + expense.amount, 0);
+
     return {
-      budgetName: budget.name,
-      totalBudgetAmount: budget.amount,
-      totalExpenses: totalExpenses,
+      name: budget.name,
+      budgetAmount: budget.amount,
+      expenseAmount: totalExpenses,
     };
   });
   
   
   console.log("Chart Data:", chartData);
   
+
+  const refreshData = async () => {
+    await Promise.all([
+      fetchBudgets(),
+      fetchIncomes(),
+      fetchAllExpenses()
+    ]);
+  };
 
   useEffect(() => {
     fetchBudgets();
@@ -65,16 +72,14 @@ function Dashboard() {
 
 
   return (
-    <>
+    <div>
       <h2 className='font-bold text-2xl'>Hi,{user?.fullName} ✌️</h2>
       <p className='text-gray-500 pt-1'>Let's manage your Expense</p>
       <CardInfo budgets={budgets} incomes={incomes} expenses={expenses}/>
       <div className='md:col-span-2 w-full mt-5'>
         <CustomBarChart data={chartData}/>
       </div>
-
-    </>
-
+    </div>
   )
 }
 

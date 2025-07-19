@@ -12,8 +12,10 @@ function CustomBarChart({ data }) {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="budgetAmount" stackId="a" fill="#8884d8" />
-        <Bar dataKey="expenseAmount" stackId="b" fill="#82ca9d" />
+        {/* Budget bar as background */}
+        <Bar dataKey="budgetAmount" stackId="a" fill="#60a5fa" barSize={40} />
+        {/* Expense bar overlays on top, in green */}
+        <Bar dataKey="expenseAmount" stackId="a" fill="#22c55e" barSize={25} />
       </BarChart>
     </div>
   )

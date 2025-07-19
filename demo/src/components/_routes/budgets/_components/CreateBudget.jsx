@@ -53,7 +53,7 @@ function CreateBudget({ onBudgetCreated }) {
               </div>
               <div className='mt-2'>
                 <h2 className='text-black font-medium my-2'>Budget Amount</h2>
-                <Input type='number' placeholder='e.g. $1000' value={amount} onChange={(e) => setAmount(e.target.value)} />
+                <Input type='number' placeholder='e.g. ₹1000' value={amount} onChange={(e) => setAmount(e.target.value)} />
               </div>
               <div>
                 <Button

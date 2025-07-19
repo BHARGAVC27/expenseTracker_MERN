@@ -13,21 +13,21 @@ function CardInfo({ budgets, incomes, expenses }) {
                 <div className='flex justify-between p-7 border rounded-lg'>
                     <div>
                         <h2 className='text-sm'>Total Income</h2>
-                        <h2 className='font-bold text-2xl'>${totalIncome}</h2>
+                        <h2 className='font-bold text-2xl'>₹{totalIncome}</h2>
                     </div>
                     <PiggyBank className='text-black bg-teal-100 rounded-full w-12 h-12 p-2' />
                 </div>
                 <div className='flex justify-between p-7 border rounded-lg'>
                     <div>
                         <h2 className='text-sm'>Total Budget</h2>
-                        <h2 className='font-bold text-2xl'>${totalbudget}</h2>
+                        <h2 className='font-bold text-2xl'>₹{totalbudget}</h2>
                     </div>
                     <PiggyBank className='text-black bg-teal-100 rounded-full w-12 h-12 p-2' />
                 </div>
                 <div className='flex justify-between p-7 border rounded-lg'>
                     <div>
                         <h2 className='text-sm'>Total Spent</h2>
-                        <h2 className='font-bold text-2xl'>${totalExpenses}</h2>
+                        <h2 className='font-bold text-2xl'>₹{totalExpenses}</h2>
                     </div>
                     <CircleDollarSign className='text-black bg-teal-100 rounded-full w-12 h-12 p-2' />
                 </div>

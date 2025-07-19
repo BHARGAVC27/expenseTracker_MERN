@@ -28,7 +28,7 @@ function IncomeItem({ income,fetchIncomes,length }) {
             </div>
           </div>
           <div>
-            <h2 className='text-teal-700 font-bold'>${income.amount}</h2>
+            <h2 className='text-teal-700 font-bold'>₹{income.amount}</h2>
           </div>
         </div>
         <div className='mt-5 flex justify-between'>
