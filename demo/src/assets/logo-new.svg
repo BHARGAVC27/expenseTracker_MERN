@@ -1,0 +1,30 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle with gradient -->
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#14b8a6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f766e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0f766e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Logo Icon -->
+  <circle cx="20" cy="20" r="18" fill="url(#logoGradient)" />
+  
+  <!-- Dollar sign -->
+  <path d="M20 8v4m0 16v4m-6-14c0-2.5 2.5-4 6-4s6 1.5 6 4-2.5 4-6 4-6 1.5-6 4 2.5 4 6 4" 
+        stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  
+  <!-- App Name -->
+  <text x="45" y="16" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="url(#textGradient)">
+    ExpenseTracker
+  </text>
+  
+  <!-- Tagline -->
+  <text x="45" y="28" font-family="Arial, sans-serif" font-size="8" fill="#6b7280">
+    Smart Money Management
+  </text>
+</svg>

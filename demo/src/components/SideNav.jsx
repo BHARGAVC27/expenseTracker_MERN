@@ -1,6 +1,6 @@
 import React from 'react';
 import { LayoutDashboard, Wallet, Receipt, Gem, Code2, PiggyBank } from 'lucide-react';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo-1.png';
 import { UserButton } from '@clerk/clerk-react';
 import { NavLink } from 'react-router-dom';
 
