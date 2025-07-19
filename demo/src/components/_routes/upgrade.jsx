@@ -50,7 +50,7 @@ function Upgrade() {
               <h2 className='text-2xl font-bold mb-4'>Pricing</h2>
               <p className='text-gray-700 mb-6'>Choose your plan and complete the upgrade process.</p>
               <Button className='bg-teal-700 text-white px-6 py-3 rounded-full shadow-lg hover:bg-teal-800 transition duration-300' onClick={handlePayment}>
-                Pay $9.99
+                Pay ₹9.99
               </Button>
             </div>
           )}

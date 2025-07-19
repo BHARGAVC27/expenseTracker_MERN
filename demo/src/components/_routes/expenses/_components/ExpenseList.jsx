@@ -3,21 +3,25 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import axios from 'axios'
 
-function ExpenseList({budgetId}) {
+function ExpenseList({budgetId, onDataChange}) {
     const  [expenses, setExpenses] = useState([]);
     
     const deleteExpense = async (id) => {
         try {
             // Await the delete request directly
             await axios.delete(`http://localhost:5000/api/expenses/${id}`);
-            toast("Expense Deleted Succesdfully")
+            toast("Expense Deleted Successfully")
             // Update the expenses state to remove the deleted expense
             setExpenses(expenses.filter((expense) => expense._id !== id));
             
+            // Trigger data refresh in parent components
+            if (onDataChange) {
+                onDataChange();
+            }
            
         } catch (error) {
             console.error('Error deleting expense:', error);
-            toast("Expense Deleted Succesdfully")
+            toast("Error deleting expense")
         }
     };
     const fetchExpenses = async () => {

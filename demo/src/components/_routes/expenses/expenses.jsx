@@ -56,8 +56,12 @@ function ExpensesScreen() {
 
   useEffect(() => {
     fetchBudgets();
-
   }, []);
+
+  // Function to refresh budget data after expense operations
+  const handleExpenseChange = () => {
+    fetchBudgets();
+  };
 
   return (
     <div className='p-3'>
@@ -95,11 +99,11 @@ function ExpensesScreen() {
             />
           ) : null
         )}
-        <AddExpense budgetId={budget_id} />
+        <AddExpense budgetId={budget_id} onExpenseAdded={handleExpenseChange} />
       </div>
       <div>
         <h2 className='font-bold text-2xl'>Latest Expenses</h2>
-        <ExpenseList budgetId={budget_id} />
+        <ExpenseList budgetId={budget_id} onDataChange={handleExpenseChange} />
       </div>
     </div>
   )

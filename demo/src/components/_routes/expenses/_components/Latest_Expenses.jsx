@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { Trash } from 'lucide-react';
 import { Toaster } from '@/components/ui/sonner';
 
-function Latest_Expenses() {
+function Latest_Expenses({ onDataChange }) {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -14,12 +14,16 @@ function Latest_Expenses() {
       await axios.delete(`http://localhost:5000/api/expenses/${id}`);
       // Update the expenses state to remove the deleted expense
       setExpenses(expenses.filter((expense) => expense._id !== id));
-      toast("Expense Deleted Succesfully");
+      toast("Expense Deleted Successfully");
 
+      // Trigger data refresh in parent components
+      if (onDataChange) {
+        onDataChange();
+      }
 
     } catch (error) {
       console.error('Error deleting expense:', error);
-      toast("Error deleting expense:")
+      toast("Error deleting expense:");
     }
   };
   useEffect(() => {
@@ -69,7 +73,7 @@ function Latest_Expenses() {
               </p>
             </div>
             <div className="flex gap-5 text-teal-700 font-bold">
-              ${expense.amount.toFixed(2)}
+              ₹{expense.amount.toFixed(2)}
               <Trash className='text-red-600 cursor-pointer
                hover:bg-red-600 p-1 size-7 hover:rounded-full hover:text-white transition-all duration-300'
                 onClick={() => { handleDeleteExpense(expense._id) }} />
