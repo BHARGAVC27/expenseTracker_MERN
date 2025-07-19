@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Budget = require('../models/userModel'); // Ensure the correct path
+const Expense = require('../models/Expense')
 
 // Route to create a new budget
 router.post('/create-budget', async (req, res) => {
@@ -70,10 +71,21 @@ router.put('/budgets/:id', async (req, res) => {
 router.delete('/budgets/:id', async (req, res) => {
   try {
     const { id } = req.params;
+    const budget = await Budget.findById(id);
+    const expense_count = budget.expensesCount;
     const deletedBudget = await Budget.findByIdAndDelete(id);
 
     if (!deletedBudget) {
       return res.status(404).json({ message: 'Budget not found' });
+    }
+    //Deleting relevant expense
+    const expenses = await Expense.deleteMany({ budgetId: id });
+
+    if (expenses.deletedCount === expense_count) {
+      console.log("All related expenses deleted successfully");
+    } else {
+      console.error("Error deleting related expenses");
+      return res.status(404).json({ message: 'Error deleting expenses' });
     }
 
     res.status(200).json({ message: 'Budget deleted successfully' });
