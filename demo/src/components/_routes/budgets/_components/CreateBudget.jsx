@@ -19,8 +19,17 @@ function CreateBudget({ onBudgetCreated }) {
   const [isOpen, setIsOpen] = useState(false); // Dialog open state
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   console.log("Backend URL:", backendUrl);
+
   const onCreateBudget = async () => {
     try {
+      //Validate inputs
+      const response = await axios.get(`${backendUrl}/incomes`);
+      const totalIncome = response.data.reduce((acc, income) => acc + income.amount, 0);
+      if(amount <=0 || amount > totalIncome)
+      {
+        toast("Invalid budget amount. (Exceeded total income or less than 0)");
+        return;
+      }
       await axios.post(`${backendUrl}/create-budget`, { name, amount });
       toast("Budget has been created.");
       setIsOpen(false); // Close the dialog

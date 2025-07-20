@@ -25,11 +25,14 @@ import { element } from 'prop-types';
 
 
 function ExpensesScreen() {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const navigate = useNavigate();
   const { budget_id } = useParams();
   console.log(budget_id);
+
   const [budgets, setBudgets] = useState([]); // State to store the list of budgets
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const [totalBudget,setTotalBudget] = useState(0);
 
   const fetchBudgets = async () => {
     try {
