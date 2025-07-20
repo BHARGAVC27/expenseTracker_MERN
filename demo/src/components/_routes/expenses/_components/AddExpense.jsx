@@ -18,28 +18,33 @@ function AddExpense({ budgetId, onExpenseAdded }) {
     console.log("Budget ID:", budgetId);
     setLoading(true);
     try {
-      await axios.post(`${backendUrl}/expenses/create-expense`, {
-        budgetId,
-        name,
-        amount: Number(amount),
-      });
-
       // Fetch current budget
       const budgetRes = await axios.get(`${backendUrl}/budgets/${budgetId}`);
       const budget = budgetRes.data;
-      const newTotalExpense = Number(budget.totalExpense || 0) + Number(amount);
-      const newExpensesCount = Number(budget.expensesCount || 0) + 1;
+      const newExpensesCount = Number(budget[0].expensesCount) + 1;
+      const newTotalExpense = Number(budget[0].totalExpense) + Number(amount);
 
-      await axios.put(`${backendUrl}/budgets/${budgetId}`, {
-        totalExpense: newTotalExpense,
-        expensesCount: newExpensesCount,
-      });
+      if (newTotalExpense <= budget[0].amount) {
+        await axios.post(`${backendUrl}/expenses/create-expense`, {
+          budgetId,
+          name,
+          amount: Number(amount),
+        });
 
-      console.log("Budget updated successfully");
-      toast('Expense added successfully');
-      setName('');
-      setAmount('');
-      if (onExpenseAdded) onExpenseAdded();
+        await axios.put(`${backendUrl}/budgets/${budgetId}`, {
+          totalExpense: newTotalExpense,
+          expensesCount: newExpensesCount,
+        });
+
+        console.log("Budget updated successfully");
+        toast('Expense added successfully');
+        if (onExpenseAdded) onExpenseAdded();
+        setName('');
+        setAmount('');
+      } else {
+        console.log(newTotalExpense, budget[0].amount);
+        toast.error('Expense exceeds budget limit');
+      }
     } catch (error) {
       console.error('Error adding expense:', error);
       toast.error('Failed to add expense');
