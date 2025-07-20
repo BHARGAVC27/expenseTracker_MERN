@@ -67,12 +67,12 @@ function ExpensesScreen() {
   };
 
   return (
-    <div className='p-3'>
-      <div className='flex justify-between'>
-        <h1 className='text-3xl font-bold mb-4'>My Expenses</h1>
+    <div className='p-2 sm:p-3'>
+      <div className='flex flex-col sm:flex-row justify-between gap-2 sm:gap-0'>
+        <h1 className='text-2xl sm:text-3xl font-bold mb-2 sm:mb-4'>My Expenses</h1>
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <span> {/* Wrapping in a non-button element */}
+            <span>
               <Button className='flex gap-2' variant='destructive'>
                 <Trash />Delete
               </Button>
@@ -93,7 +93,7 @@ function ExpensesScreen() {
           </AlertDialogContent>
         </AlertDialog>
       </div>
-      <div className='grid grid-cols-1 md:grid-cols-2 mt-6 gap-5'>
+      <div className='grid grid-cols-1 gap-4 md:grid-cols-2 mt-4 sm:mt-6'>
         {budgets.map((budget) =>
           budget_id === budget._id ? (
             <BudgetItem
@@ -104,8 +104,8 @@ function ExpensesScreen() {
         )}
         <AddExpense budgetId={budget_id} onExpenseAdded={handleExpenseChange} />
       </div>
-      <div>
-        <h2 className='font-bold text-2xl'>Latest Expenses</h2>
+      <div className='mt-6'>
+        <h2 className='font-bold text-xl sm:text-2xl'>Latest Expenses</h2>
         <ExpenseList budgetId={budget_id} onDataChange={handleExpenseChange} />
       </div>
     </div>

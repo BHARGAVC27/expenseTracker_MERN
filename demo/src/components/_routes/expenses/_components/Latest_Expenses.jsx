@@ -57,27 +57,31 @@ function Latest_Expenses({ onDataChange }) {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-2 sm:p-4">
       <Toaster />
-      <h1 className="text-2xl font-bold mb-4">Latest Expenses</h1>
-      <div className="space-y-4">
-
+      <h1 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Latest Expenses</h1>
+      <div className="space-y-3 sm:space-y-4">
         {expenses.map((expense) => (
           <div
             key={expense._id}
-            className="flex justify-between items-center p-4 bg-white rounded-lg shadow-sm border"
+            className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 bg-white rounded-lg shadow-sm border"
           >
-            <div>
-              <h3 className="font-medium">{expense.name}</h3>
-              <p className="text-sm text-gray-500">
+            {/* Mobile: name, then amount+trash below; Desktop: name/date left, amount+trash right */}
+            <div className="flex flex-col sm:block w-full">
+              <h3 className="font-medium text-base sm:text-lg">{expense.name}</h3>
+              <div className="flex flex-row items-center justify-between mt-1 sm:hidden">
+                <span className="text-teal-700 font-bold text-base">₹{expense.amount.toFixed(2)}</span>
+                <Trash className='text-red-600 cursor-pointer hover:bg-red-600 p-1 size-7 hover:rounded-full hover:text-white transition-all duration-300' onClick={() => { handleDeleteExpense(expense._id) }} />
+              </div>
+              {/* Hide date on mobile, show on desktop */}
+              <p className="hidden sm:block text-xs sm:text-sm text-gray-500">
                 {new Date(expense.date).toLocaleDateString()}
               </p>
             </div>
-            <div className="flex gap-5 text-teal-700 font-bold">
+            {/* Desktop: amount and trash icon */}
+            <div className="hidden sm:flex items-center gap-5 text-teal-700 font-bold text-lg">
               ₹{expense.amount.toFixed(2)}
-              <Trash className='text-red-600 cursor-pointer
-               hover:bg-red-600 p-1 size-7 hover:rounded-full hover:text-white transition-all duration-300'
-                onClick={() => { handleDeleteExpense(expense._id) }} />
+              <Trash className='text-red-600 cursor-pointer hover:bg-red-600 p-1 size-7 hover:rounded-full hover:text-white transition-all duration-300' onClick={() => { handleDeleteExpense(expense._id) }} />
             </div>
           </div>
         ))}

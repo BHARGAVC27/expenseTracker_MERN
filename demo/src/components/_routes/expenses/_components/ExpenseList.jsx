@@ -40,26 +40,36 @@ function ExpenseList({ budgetId, onDataChange }) {
 
     return (
         <div>
-            <div className='grid grid-cols-4 bg-slate-200 p-2 mt-3'>
+            {/* Desktop table header */}
+            <div className='hidden sm:grid grid-cols-4 bg-slate-200 p-2 mt-3 rounded-t-md'>
                 <h2 className='font-bold'>Name</h2>
                 <h2 className='font-bold'>Amount</h2>
                 <h2 className='font-bold'>Date</h2>
                 <h2 className='font-bold'>Action</h2>
             </div>
-            <div >
+            <div>
                 {expenses.map((expense) => (
-                    <div key={expense.id} className='grid grid-cols-4 bg-slate-100 p-2'>
-                        <h2>{expense.name}</h2>
-                        <h2>{expense.amount}</h2>
-                        <h2>{new Date(expense.date).toLocaleDateString()}</h2>
-                        <h2>
-                            <Trash className='text-red-600 cursor-pointer' onClick={() => deleteExpense(expense._id)} />
-                        </h2>
+                    <div key={expense.id} className='bg-slate-100 p-2 border-b last:rounded-b-md flex flex-col sm:grid sm:grid-cols-4 sm:items-center'>
+                        {/* Mobile: name on top, amount+trash below. Desktop: table layout */}
+                        <div className="flex flex-col w-full sm:block">
+                            <div className="flex flex-row justify-between items-center sm:block">
+                                <span className="font-medium text-base sm:text-inherit">{expense.name}</span>
+                            </div>
+                            {/* Mobile: amount + trash below name, Desktop: right side */}
+                            <div className="flex flex-row items-center justify-between mt-1 sm:hidden">
+                                <span className="text-teal-700 font-bold text-base">₹{expense.amount}</span>
+                                <Trash className='text-red-600 cursor-pointer hover:bg-red-600 p-1 size-7 hover:rounded-full hover:text-white transition-all duration-300' onClick={() => deleteExpense(expense._id)} />
+                            </div>
+                        </div>
+                        {/* Desktop: amount */}
+                        <div className="hidden sm:block">₹{expense.amount}</div>
+                        {/* Desktop: date */}
+                        <div className="hidden sm:block">{new Date(expense.date).toLocaleDateString()}</div>
+                        {/* Desktop: trash icon */}
+                        <div className="hidden sm:flex items-center"><Trash className='text-red-600 cursor-pointer hover:bg-red-600 p-1 size-7 hover:rounded-full hover:text-white transition-all duration-300' onClick={() => deleteExpense(expense._id)} /></div>
                     </div>
                 ))}
-
             </div>
-
         </div>
     )
 }

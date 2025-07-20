@@ -25,17 +25,18 @@ function DashboardLayout({children}) {
   }
 
   return (
-    <div>
-        <div className='fixed md:w-64 hidden md:block'>
+    <div className="relative">
+        {/* Mobile: SideNav is positioned fixed and handled by its own state */}
+        {/* Desktop: SideNav is fixed with proper width */}
+        <div className='md:fixed md:w-64 md:block'>
             <SideNav/>
         </div>
         <div className='md:ml-64'>
             <DashboardHeader/>
         </div>
-        <main className='md:ml-64 p-4'>
+        <main className='md:ml-64 p-2 sm:p-4 pt-16 md:pt-4'>
             <Outlet/>
         </main>
-
     </div>
   )
 }

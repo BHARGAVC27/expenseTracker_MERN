@@ -23,12 +23,12 @@ function BudgetList() {
   }, []);
 
   return (
-    <div className='mt-7'>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
-        <CreateBudget onBudgetCreated={fetchBudgets} /> {/* Pass fetchBudgets as a prop */}
+    <div className='mt-5 sm:mt-7'>
+      <div className='grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
+        <CreateBudget onBudgetCreated={fetchBudgets} />
         {budgets.map((budget) => (
           <BudgetItem
-          key={budget._id} budget={budget}
+            key={budget._id} budget={budget}
           />
         ))}
       </div>
