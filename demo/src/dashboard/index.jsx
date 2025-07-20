@@ -4,6 +4,7 @@ import CardInfo from './_components/CardInfo';
 import CustomBarChart from './_components/CustomBarChart.jsx';
 import BudgetItem from '@/components/_routes/budgets/_components/BudgetItem';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Dashboard() {
   const { user } = useUser();
@@ -129,18 +130,25 @@ function Dashboard() {
         <div className="bg-white rounded-lg p-6 border shadow-sm">
           <h3 className="text-lg font-bold text-gray-800 mb-4">Quick Actions</h3>
           <div className="grid grid-cols-3 gap-4">
-            <button className="p-4 border border-teal-200 rounded-lg hover:bg-teal-50 transition-colors">
-              <div className="text-teal-600 font-semibold">Add Budget</div>
-              <div className="text-xs text-gray-600 mt-1">Create new budget</div>
-            </button>
-            <button className="p-4 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors">
-              <div className="text-blue-600 font-semibold">Add Income</div>
-              <div className="text-xs text-gray-600 mt-1">Record new income</div>
-            </button>
-            <button className="p-4 border border-red-200 rounded-lg hover:bg-red-50 transition-colors">
-              <div className="text-red-600 font-semibold">Add Expense</div>
-              <div className="text-xs text-gray-600 mt-1">Track new expense</div>
-            </button>
+            
+              <button className="p-4 border border-teal-200 rounded-lg hover:bg-teal-50 transition-colors">
+                <Link to="/dashboard/budgets">
+                <div className="text-teal-600 font-semibold">Add Budget</div>
+                <div className="text-xs text-gray-600 mt-1">Create new budget</div>
+                </Link>
+              </button>
+              <button className="p-4 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors">
+                <Link to="/dashboard/incomes">
+                  <div className="text-blue-600 font-semibold">Add Income</div>
+                  <div className="text-xs text-gray-600 mt-1">Record new income</div>
+                </Link>
+              </button>
+              <button className="p-4 border border-red-200 rounded-lg hover:bg-red-50 transition-colors">
+                <Link to="/dashboard/budgets">
+                  <div className="text-red-600 font-semibold">Add Expense</div>
+                  <div className="text-xs text-gray-600 mt-1">Track new expense</div>
+                </Link>
+              </button>
           </div>
         </div>
       </div>

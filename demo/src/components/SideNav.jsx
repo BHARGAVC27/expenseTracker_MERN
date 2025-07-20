@@ -43,13 +43,15 @@ export default function SideNav() {
 
   return (
     <>
-      {/* Mobile Menu Button */}
-      <button
-        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-white border rounded-md shadow-lg"
-        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-      >
-        {isMobileMenuOpen ? <X size="24" /> : <Menu size="24" />}
-      </button>
+      {/* Mobile Menu Button: Only show when sidebar is closed */}
+      {!isMobileMenuOpen && (
+        <button
+          className="md:hidden fixed top-4 left-4 z-50 p-2 bg-white border rounded-md shadow-lg"
+          onClick={() => setIsMobileMenuOpen(true)}
+        >
+          <Menu size="24" />
+        </button>
+      )}
 
       {/* Overlay for mobile */}
       {isMobileMenuOpen && (
