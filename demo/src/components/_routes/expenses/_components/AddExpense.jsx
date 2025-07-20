@@ -8,6 +8,7 @@ function AddExpense({ budgetId, onExpenseAdded }) {
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
   const [loading, setLoading] = useState(false);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const handleAddExpense = async () => {
     if (!budgetId) {
@@ -17,19 +18,19 @@ function AddExpense({ budgetId, onExpenseAdded }) {
     console.log("Budget ID:", budgetId);
     setLoading(true);
     try {
-      await axios.post(`http://localhost:5000/api/expenses/create-expense`, {
+      await axios.post(`${backendUrl}/expenses/create-expense`, {
         budgetId,
         name,
         amount: Number(amount),
       });
 
       // Fetch current budget
-      const budgetRes = await axios.get(`http://localhost:5000/api/budget/${budgetId}`);
+      const budgetRes = await axios.get(`${backendUrl}/budgets/${budgetId}`);
       const budget = budgetRes.data;
       const newTotalExpense = Number(budget.totalExpense || 0) + Number(amount);
       const newExpensesCount = Number(budget.expensesCount || 0) + 1;
 
-      await axios.put(`http://localhost:5000/api/budgets/${budgetId}`, {
+      await axios.put(`${backendUrl}/budgets/${budgetId}`, {
         totalExpense: newTotalExpense,
         expensesCount: newExpensesCount,
       });
@@ -49,29 +50,29 @@ function AddExpense({ budgetId, onExpenseAdded }) {
 
   return (
     <div className='border p-5 rounded-lg'>
-      <Toaster/>
+      <Toaster />
       <h2 className='font-bold text-lg'>Add Expense</h2>
       <div className='mt-2'>
         <h2 className='text-black font-medium my-1'>Expense Name</h2>
-        <Input 
+        <Input
           value={name}
-          placeholder="e.g Bedroom Decor" 
-          onChange={(e) => setName(e.target.value)} 
+          placeholder="e.g Bedroom Decor"
+          onChange={(e) => setName(e.target.value)}
           disabled={loading}
         />
       </div>
       <div>
         <h2 className='text-black font-medium my-1'>Expense Amount</h2>
-        <Input 
+        <Input
           value={amount}
-          placeholder="e.g 1000" 
-          type='number' 
-          onChange={(e) => setAmount(e.target.value)} 
+          placeholder="e.g 1000"
+          type='number'
+          onChange={(e) => setAmount(e.target.value)}
           disabled={loading}
         />
-        <Button 
-          disabled={!(name && amount) || loading} 
-          className='mt-2 w-full' 
+        <Button
+          disabled={!(name && amount) || loading}
+          className='mt-2 w-full'
           onClick={handleAddExpense}
         >
           {loading ? 'Adding...' : 'Add Expense'}

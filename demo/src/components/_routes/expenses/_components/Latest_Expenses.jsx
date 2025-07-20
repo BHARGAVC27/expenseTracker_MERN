@@ -7,11 +7,12 @@ import { Toaster } from '@/components/ui/sonner';
 function Latest_Expenses({ onDataChange }) {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const handleDeleteExpense = async (id) => {
     try {
       // Await the delete request directly
-      await axios.delete(`http://localhost:5000/api/expenses/${id}`);
+      await axios.delete(`${backendUrl}/expenses/${id}`);
       // Update the expenses state to remove the deleted expense
       setExpenses(expenses.filter((expense) => expense._id !== id));
       toast("Expense Deleted Successfully");
@@ -29,7 +30,7 @@ function Latest_Expenses({ onDataChange }) {
   useEffect(() => {
     const fetchLatestExpenses = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/expenses/');
+        const response = await axios.get(`${backendUrl}/expenses/`);
         setExpenses(response.data || []);
       } catch (error) {
         console.error('Error fetching latest expenses:', error);
@@ -49,18 +50,18 @@ function Latest_Expenses({ onDataChange }) {
 
   if (!expenses.length) {
     return <div className="text-gray-500 mt-4">
-      <Toaster/>
+      <Toaster />
       <p>No expenses found.</p>
       Please add an expense in the Budgets to display here
-      </div>;
+    </div>;
   }
 
   return (
     <div className="p-4">
-      <Toaster/>
+      <Toaster />
       <h1 className="text-2xl font-bold mb-4">Latest Expenses</h1>
       <div className="space-y-4">
-      
+
         {expenses.map((expense) => (
           <div
             key={expense._id}

@@ -20,10 +20,11 @@ function Income() {
   const [category, setCategory] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const fetchIncomes = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/incomes');
+      const response = await axios.get(`${backendUrl}/incomes`);
       setIncomes(response.data);
     } catch (error) {
       console.error('Error fetching incomes:', error);
@@ -32,7 +33,7 @@ function Income() {
 
   const addIncome = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/incomes', { name, amount, category });
+      const response = await axios.post(`${backendUrl}/incomes`, { name, amount, category });
       setIncomes([...incomes, response.data]);
       setName('');
       setAmount('');
@@ -68,7 +69,7 @@ function Income() {
               <DialogTitle>New Income</DialogTitle>
               <DialogDescription>
                 <div className=''>
-                <h2 className='text-black font-medium my-2'>Income Name</h2>
+                  <h2 className='text-black font-medium my-2'>Income Name</h2>
                   <input
                     type='text'
                     placeholder='Income Name'
@@ -84,7 +85,7 @@ function Income() {
                     onChange={(e) => setAmount(e.target.value)}
                     className='border p-2 rounded-lg w-full mb-2'
                   />
-                  <Button  disabled={!(name && amount)} className='bg-teal-700 w-full mt-3' onClick={addIncome}>
+                  <Button disabled={!(name && amount)} className='bg-teal-700 w-full mt-3' onClick={addIncome}>
                     Add Income
                   </Button>
                 </div>
@@ -97,7 +98,7 @@ function Income() {
         <h2 className='text-xl font-semibold mb-2'>Income List</h2>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
           {incomes.map((income) => (
-            <IncomeItem key={income._id} income={income} fetchIncomes={fetchIncomes}/>
+            <IncomeItem key={income._id} income={income} fetchIncomes={fetchIncomes} />
           ))}
           {!incomes.length
             && (

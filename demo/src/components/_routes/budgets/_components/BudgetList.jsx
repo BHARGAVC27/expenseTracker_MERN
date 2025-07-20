@@ -6,10 +6,11 @@ import { Toaster } from '@/components/ui/sonner';
 
 function BudgetList() {
   const [budgets, setBudgets] = useState([]); // State to store the list of budgets
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const fetchBudgets = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/budgets');
+      const response = await axios.get(`${backendUrl}/budgets`);
       setBudgets(response.data); // Set fetched data to budgets state
     } catch (error) {
       console.error('Error fetching budgets:', error);

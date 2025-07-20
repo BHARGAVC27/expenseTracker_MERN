@@ -17,10 +17,11 @@ function CreateBudget({ onBudgetCreated }) {
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
   const [isOpen, setIsOpen] = useState(false); // Dialog open state
-
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  console.log("Backend URL:", backendUrl);
   const onCreateBudget = async () => {
     try {
-      await axios.post('http://localhost:5000/api/create-budget', { name, amount });
+      await axios.post(`${backendUrl}/create-budget`, { name, amount });
       toast("Budget has been created.");
       setIsOpen(false); // Close the dialog
       onBudgetCreated(); // Trigger re-fetch of budgets in BudgetList
@@ -32,7 +33,7 @@ function CreateBudget({ onBudgetCreated }) {
 
   return (
     <div>
-      <Toaster/>
+      <Toaster />
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <div
